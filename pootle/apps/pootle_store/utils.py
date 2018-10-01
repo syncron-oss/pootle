@@ -6,6 +6,7 @@
 # or later license. See the LICENSE file for a copy of the license and the
 # AUTHORS file for copyright and authorship information.
 
+import logging
 from collections import OrderedDict
 
 from django.conf import settings
@@ -25,6 +26,7 @@ from pootle_statistics.models import (
 from .constants import TRANSLATED
 from .models import Suggestion
 
+logger = logging.getLogger(__name__)
 
 User = get_user_model()
 
@@ -173,6 +175,10 @@ class SuggestionsReview(object):
             boolean indicating if the suggestion was successfully added.
             If the suggestion already exists it's returned as well.
         """
+        if translation is None:
+            logger.warning(
+                'SuggestionsReview#add got empty translation for unit %s', unit)
+            return (None, False)
         dont_add = (
             not filter(None, translation)
             or translation == unit.target
