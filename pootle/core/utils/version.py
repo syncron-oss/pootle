@@ -74,7 +74,7 @@ def get_version(version=None):
         mapping = {'alpha': 'a', 'beta': 'b', 'rc': 'rc'}
         sub = mapping[candidate] + str(candidate_extra)
 
-    return str(main + sub)
+    return str(main + sub) + '+syncron.1'
 
 
 def _is_development_candidate(version):
